@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Phone Number Auto-fill</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/css/intlTelInput.css">
+</head>
+<body>
+  <form id="registrationForm">
+    <input type="text" id="phone" name="phone" placeholder="Enter your phone number">
+    <button type="submit">Register</button>
+  </form>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/intlTelInput.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const phoneInput = document.getElementById('phone');
+      const registrationForm = document.getElementById('registrationForm');
+
+      function getPhoneNumberFromDevice() {
+        if ("geolocation" in navigator) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            const countryCode = getCountryCodeFromPosition(position);
+            const phoneNumber = getPhoneNumberFromTelephonyAPI(countryCode);
+
+            if (phoneNumber) {
+              phoneInput.value = phoneNumber;
+            }
+          });
+        } else {
+          // Geolocation not available
+        }
+      }
+
+      function getCountryCodeFromPosition(position) {
+        // Extract and return the country code based on the user's position
+        // (You'll need to implement this function based on your specific requirements)
+        return '+1'; // Replace this with the actual country code
+      }
+
+      function getPhoneNumberFromTelephonyAPI(countryCode) {
+        // Use the Web Telephony API to get the phone number based on the detected country code
+        // (You'll need to implement this function based on your specific requirements)
+        return ''; // Replace this with the actual phone number
+      }
+
+      registrationForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        // Handle form submission here
+        // You can access the filled phone number from 'phoneInput.value'
+      });
+
+      getPhoneNumberFromDevice();
+    });
+  </script>
+</body>
+</html>
